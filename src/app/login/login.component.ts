@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -13,7 +14,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
@@ -26,6 +27,16 @@ export class LoginComponent {
 
   get password() {
     return this.loginForm.get('password')!;
+  }
+
+  public login(){
+    this.router.navigate(['mainPage']);
+    //ToDo
+  }
+
+  public signup(){
+    this.router.navigate(['signup']);
+    //ToDo
   }
 
   onSubmit() {

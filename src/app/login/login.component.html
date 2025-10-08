@@ -1,5 +1,5 @@
 <div class="login-container">
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="loginForm">
     <h2>Login</h2>
 
     <label>Email</label>
@@ -8,12 +8,13 @@
       Valid email is required.
     </div>
 
-    <label>Password</label>
+    <label>Jelszó</label>
     <input type="password" formControlName="password" />
     <div *ngIf="password.invalid && password.touched" class="error">
       Password is required.
     </div>
 
-    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+    <button type="submit" (click)="login()">Bejelentkezés</button>
+    <button type="submit" (click)="signup()">Regisztrálás</button>
   </form>
 </div>
