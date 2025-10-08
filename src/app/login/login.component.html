@@ -1,5 +1,6 @@
+<body>
 <div class="login-container">
-  <form [formGroup]="loginForm">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <h2>Login</h2>
 
     <label>Email</label>
@@ -18,3 +19,4 @@
     <button type="submit" (click)="signup()">Regisztrálás</button>
   </form>
 </div>
+</body>

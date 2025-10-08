@@ -1,11 +1,10 @@
-// 🌈 Variables
 $primary-color: #007bff;
 $error-color: #dc3545;
 $input-padding: 0.5rem;
 $border-radius: 8px;
 $font-stack: 'Segoe UI', sans-serif;
+//$backgorund-img: url('../../backgroundIMG2.jpg');
 
-// 🔧 Mixin for button styling
 @mixin button-style($bg-color) {
   background-color: $bg-color;
   color: white;
@@ -20,7 +19,13 @@ $font-stack: 'Segoe UI', sans-serif;
   }
 }
 
-// 📦 Login Container
+/*body{
+  size: 100%;
+  background-image: $backgorund-img;
+  background-repeat: no-repeat;
+  background-size: cover;
+}*/
+
 .login-container {
   max-width: 400px;
   margin: 2rem auto;
@@ -43,7 +48,7 @@ $font-stack: 'Segoe UI', sans-serif;
     label {
       margin-top: 1rem;
       font-weight: bold;
-      color: nth((#333, #444, #555), 2); // using nth() for fun
+      color: nth((#333, #444, #555), 2);
     }
 
     input {
