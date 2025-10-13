@@ -3,7 +3,6 @@ $error-color: #dc3545;
 $input-padding: 0.5rem;
 $border-radius: 8px;
 $font-stack: 'Segoe UI', sans-serif;
-//$backgorund-img: url('../../backgroundIMG2.jpg');
 
 @mixin button-style($bg-color) {
   background-color: $bg-color;
@@ -18,13 +17,6 @@ $font-stack: 'Segoe UI', sans-serif;
     background-color: darken($bg-color, 10%);
   }
 }
-
-/*body{
-  size: 100%;
-  background-image: $backgorund-img;
-  background-repeat: no-repeat;
-  background-size: cover;
-}*/
 
 .login-container {
   max-width: 400px;
