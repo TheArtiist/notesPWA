@@ -1,0 +1,25 @@
+<div class="signup-container">
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+    <h2>Sign Up</h2>
+
+    <label>Email</label>
+    <input type="email" formControlName="email" />
+    <div *ngIf="email.invalid && email.touched" class="error">
+      Valid email is required.
+    </div>
+
+    <label>Password</label>
+    <input type="password" formControlName="password" />
+    <div *ngIf="password.invalid && password.touched" class="error">
+      Password must be at least 6 characters.
+    </div>
+
+    <label>Confirm Password</label>
+    <input type="password" formControlName="confirmPassword" />
+    <div *ngIf="confirmPassword.invalid && confirmPassword.touched" class="error">
+      Passwords must match.
+    </div>
+
+    <button type="submit" [disabled]="signupForm.invalid">Create Account</button>
+  </form>
+</div>
