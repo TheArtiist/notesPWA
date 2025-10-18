@@ -1,0 +1,102 @@
+$app-bg: #f5f7fa;
+$sidebar-bg: #2f3542;
+$note-radius: 12px;
+$note-padding: 1rem;
+
+$colors: (
+  color-1: #ff6b6b,
+  color-2: #ffa502,
+  color-3: #2ed573,
+  color-4: #1e90ff,
+  color-5: #a55eea,
+  color-6: #ff4757
+);
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: $app-bg;
+}
+
+.app {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: $sidebar-bg;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+
+  .logo {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .add-note {
+    background: white;
+    color: $sidebar-bg;
+    border: none;
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+
+  .search {
+    padding: 0.5rem;
+    border-radius: 6px;
+    border: none;
+    font-size: 1rem;
+  }
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+
+  h1 {
+    margin-bottom: 1.5rem;
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+
+    .note-card {
+      background: white;
+      border-radius: $note-radius;
+      padding: $note-padding;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+
+      h2 {
+        font-size: 1.1rem;
+        margin: 0 0 0.5rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .icon {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        font-size: 1.2rem;
+      }
+    }
+
+    @each $name, $color in $colors {
+      .#{$name} {
+        border-left: 6px solid $color;
+      }
+    }
+  }
+}

@@ -3,13 +3,12 @@ $error-color: #dc3545;
 $input-padding: 0.5rem;
 $border-radius: 8px;
 $font-stack: 'Segoe UI', sans-serif;
-//$backgorund-img: url('../../backgroundIMG2.jpg');
 
 @mixin button-style($bg-color) {
   background-color: $bg-color;
   color: white;
   border: none;
-  border-radius: $border-radius / 2;
+  border-radius: calc($border-radius / 2);
   padding: $input-padding 1rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -17,14 +16,7 @@ $font-stack: 'Segoe UI', sans-serif;
   &:hover {
     background-color: darken($bg-color, 10%);
   }
-}
-
-/*body{
-  size: 100%;
-  background-image: $backgorund-img;
-  background-repeat: no-repeat;
-  background-size: cover;
-}*/
+} 
 
 .login-container {
   max-width: 400px;
@@ -54,7 +46,7 @@ $font-stack: 'Segoe UI', sans-serif;
     input {
       padding: $input-padding;
       border: 1px solid #ccc;
-      border-radius: $border-radius / 2;
+      border-radius: calc($border-radius / 2);
       margin-bottom: 0.5rem;
       font-size: 1rem;
     }
