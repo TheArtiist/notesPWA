@@ -11,7 +11,11 @@
       <div class="notes-grid">
         @for(n of notes; track $index){
           <div class="note-card color-1">
-            <app-note-cards [note]="n"
+            <app-note-cards 
+              [note]="n" 
+              [title]="n.title"
+              [content]="n.content"
+              [date]="n.date"
             ></app-note-cards>
             <!-- <h2 class="title">{}</h2>
             <p>May 21, 2020</p>
