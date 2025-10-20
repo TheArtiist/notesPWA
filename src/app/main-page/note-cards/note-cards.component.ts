@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { Note } from '../../shared/note';
+import { ManagementService } from '../../shared/management.service';
 
 @Component({
   selector: 'app-note-cards',
@@ -8,11 +10,12 @@ import { Component, Input } from '@angular/core';
   styleUrl: './note-cards.component.scss'
 })
 export class NoteCardsComponent {
-  //@Input() note!: NoteCardsComponent[];
+  @Input() note?: Note;
   @Input() title!: string;
   @Input() content!: string;
-  @Input() date!: string; //Last update date
+  @Input() date!: string;   
    
+  private managementService = inject(ManagementService);
   constructor(){
     setInterval(() => {
        /*if(this.note){

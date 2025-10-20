@@ -1,20 +1,31 @@
 import { Component } from '@angular/core';
 import { NoteCardsComponent } from './note-cards/note-cards.component';
+import { Note } from '../shared/note';
+import { ManagementService } from '../shared/management.service';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'mainPage',
   standalone: true,
-  imports: [],
+  imports: [
+    NoteCardsComponent
+  ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
 export class MainPageComponent {
-  public readonly notes!: NoteCardsComponent[];
+  public readonly notes: Note[];
 
   constructor(
-    
+    private managementService: ManagementService,
+    private router: Router
   ){
-    //ToDo
+    this.notes=this.managementService.notes;
+  }
+
+  createNote(): void{
+    //this.router.navigateByUrl('addNote');
+    console.log("Working");
   }
 }
