@@ -24,8 +24,9 @@ export class MainPageComponent {
     this.notes=this.managementService.notes;
   }
 
-  createNote(): void{
-    //this.router.navigateByUrl('addNote');
-    console.log("Working");
+  public createNote(): void{
+    this.router.navigate(['createNote']);
+    
   }
+
 }

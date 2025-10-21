@@ -6,7 +6,7 @@ import { Note } from './note';
   providedIn: 'root'
 })
 export class ManagementService {
-  public readonly notes: Note[] = [
+  public notes: Note[] = [
     {
       title: "Teszt",
       content: "Ez egy teszt szöveg",
@@ -36,6 +36,43 @@ export class ManagementService {
         this.db = event.target.result; //ToDo
     }
   }
+
+  public getNoteById(id: number): Promise<Note | undefined> {
+  return new Promise((resolve, reject) => {
+    const transaction = this.db.transaction(this.objectStoreName, "readonly");
+    const objectStore = transaction.objectStore(this.objectStoreName);
+    const request = objectStore.get(id);
+
+    request.onsuccess = () => {
+      resolve(request.result);
+    };
+
+    request.onerror = () => {
+      reject(request.error);
+    };
+  });
+}
+
+public updateNote(note: Note): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    const transaction = this.db.transaction(this.objectStoreName, "readwrite");
+    const objectStore = transaction.objectStore(this.objectStoreName);
+    const request = objectStore.put(note); // put = update or insert
+
+    request.onsuccess = () => {
+      const index = this.notes.findIndex(n => n.id === note.id);
+      if (index !== -1) {
+        this.notes[index] = note;
+      }
+      resolve(true);
+    };
+
+    request.onerror = () => {
+      reject(false);
+    };
+  });
+}
+
 
   public createNote(title: string, content: string, date: string){
     let note: Note = { //Note típus legyen
@@ -73,13 +110,22 @@ export class ManagementService {
     }
   }
 
-  public deleteNote(title: string): void{
-    const objectStore = this.db.transaction(this.objectStoreName, "readwrite").objectStore(this.objectStoreName);
-    
-    const request = objectStore.delete(title);
+  public deleteNote(id: number): Promise<boolean> {
+  return new Promise((resolve, reject) => {
+    const transaction = this.db.transaction(this.objectStoreName, "readwrite");
+    const objectStore = transaction.objectStore(this.objectStoreName);
+    const request = objectStore.delete(id);
+
     request.onsuccess = () => {
-      //const index = this.notes.find(title);
-    }
-  }
+      this.notes = this.notes.filter(n => n.id !== id);
+      resolve(true);
+    };
+
+    request.onerror = () => {
+      reject(false);
+    };
+  });
+}
+
 
 }

@@ -20,6 +20,11 @@ export const routes: Routes = [
         loadComponent: () => import("./main-page/main-page.component").then(c => c.MainPageComponent)
     },
     {
+        path: "createNote",
+        //component: CreateNoteComponent
+        loadComponent: () => import("./create-note/create-note.component").then(c => c.CreateNoteComponent)
+    },
+    {
         path: "**",
         redirectTo: "login"
     }
