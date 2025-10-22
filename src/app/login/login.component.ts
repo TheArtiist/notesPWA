@@ -29,17 +29,17 @@ export class LoginComponent {
     return this.loginForm.get('password')!;
   }
 
-  public login(){
+  public login(): void{
     this.router.navigate(['mainPage']);
     //ToDo
   }
 
-  public signup(){
+  public signup(): void{
     this.router.navigate(['signup']);
     //ToDo
   }
 
-  onSubmit() {
+  onSubmit(): void{
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       console.log('Belépés:', email, password);
