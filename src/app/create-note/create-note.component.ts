@@ -46,7 +46,6 @@ export class CreateNoteComponent {
     date: new Date().toISOString(),
     
   };
-  this.managementService.updateNote(note);
   if (this.editingNoteId !== undefined) {
     note.id= this.editingNoteId;
     this.managementService.updateNote(note);
