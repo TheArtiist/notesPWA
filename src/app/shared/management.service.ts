@@ -90,13 +90,13 @@ public updateNote(note: Note): void {
 
       if(cursor){
         this.notes.push(cursor.value);
+        cursor.continue();
       }
-      cursor.continue();
     }
   }
 
-  public deleteNote(id: number): void{
-  
+  public deleteNote(id: number): Promise<void>{
+  return new Promise((resolve, reject) => {
     const objectStore = this.db.transaction(this.objectStoreName, 'readwrite').objectStore(this.objectStoreName);
     const request = objectStore.delete(id);
 
@@ -105,12 +105,15 @@ public updateNote(note: Note): void {
       if(index != -1){
         this.notes.splice(index,1);
       }
+      console.log("Elért a resolve-ig");
+      resolve();
     };
 
     request.onerror = (event: any) => {
       console.log('Error deleting item:', event.target.error);
+      reject(event.target.error);
     };
-  
+  });
 }
 
 private initIndexedDB(): void{
