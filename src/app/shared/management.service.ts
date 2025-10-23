@@ -6,13 +6,7 @@ import { Note } from './note';
   providedIn: 'root'
 })
 export class ManagementService {
-  public notes: Note[] = [
-    {
-      title: "Teszt",
-      content: "Ez egy teszt szöveg",
-      date: "2025.10.20"
-    }
-  ];
+  public notes: Note[] = [];
   
   private db!:IDBDatabase;
   private readonly objectStoreName = "Notes";
@@ -41,7 +35,7 @@ public updateNote(note: Note): void {
  
     const transaction = this.db.transaction(this.objectStoreName, "readwrite");
     const objectStore = transaction.objectStore(this.objectStoreName);
-    const request = objectStore.put(note); // put = update or insert
+    const request = objectStore.add(note); // put = update or insert
 
     request.onsuccess = () => {
       const index = this.notes.findIndex(n => n.id === note.id);
@@ -58,7 +52,7 @@ public updateNote(note: Note): void {
 }
 
 
-  public createNote(title: string, content: string, date: string){
+  public createNote(title: string, content: string, date: string): boolean{
     let note: Note = { //Note típus legyen
       title,
       content,
@@ -66,7 +60,7 @@ public updateNote(note: Note): void {
     };
 
     const objectStore = this.db.transaction(this.objectStoreName, "readwrite").objectStore(this.objectStoreName);
-    const request = objectStore.add(note); //Edit-nél put-ot kell használni
+    let request = objectStore.add(note); //Edit-nél put-ot kell használni
 
     request.onsuccess= (event: any) => {
       const newNote: Note = { 
@@ -76,8 +70,9 @@ public updateNote(note: Note): void {
       this.notes.push(newNote);
     }
 
-
-    
+    request.onerror = (event: any) =>{
+      console.log("Hiba történt: ", event.target.error);
+    }
     return true;
   }
 
@@ -105,7 +100,7 @@ public updateNote(note: Note): void {
       if(index != -1){
         this.notes.splice(index,1);
       }
-      console.log("Elért a resolve-ig");
+      console.log("Elért a resolve-ig")
       resolve();
     };
 

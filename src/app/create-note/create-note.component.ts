@@ -44,14 +44,16 @@ export class CreateNoteComponent {
   const note: Note = {
     ...this.noteForm.value,
     date: new Date().toISOString(),
-    id: this.editingNoteId ?? undefined
+    
   };
-
-  if (this.editingNoteId) {
+  this.managementService.updateNote(note);
+  if (this.editingNoteId !== undefined) {
+    note.id= this.editingNoteId;
     this.managementService.updateNote(note);
+    this.router.navigate(['mainPage']);
   } else {
     this.managementService.createNote(note.title, note.content, note.date);
-    this.router.navigate(['/main']);
+    this.router.navigate(['mainPage']);
   }
 }
 }
