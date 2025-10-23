@@ -29,4 +29,8 @@ export class MainPageComponent {
     
   }
 
+  public onDeleteNote(id: number):void{
+    this.managementService.deleteNote(id);
+  }
+
 }

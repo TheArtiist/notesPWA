@@ -3,7 +3,10 @@
 
   <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
     <label>Title</label>
-    <input type="text" formControlName="title" />
+    <input type="text" formControlName="title"/>
+    <div *ngIf="noteForm.get('title')?.invalid && noteForm.get('title')?.touched">
+    <small class="error">A cím nem lehet üres!</small>
+   </div>
 
     <label>Content</label>
     <textarea formControlName="content" rows="6"></textarea>
