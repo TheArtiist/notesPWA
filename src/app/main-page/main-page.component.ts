@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './main-page.component.scss'
 })
 export class MainPageComponent {
-  public readonly notes: Note[];
+  public notes: Note[];
 
   constructor(
     private managementService: ManagementService,
@@ -27,6 +27,13 @@ export class MainPageComponent {
   public createNote(): void{
     this.router.navigate(['createNote']);
     
+  }
+
+  public onDeleteNote(id: number):void{
+    console.log("main-page");
+    this.managementService.deleteNote(id).then(() => {
+    this.notes = this.managementService.notes; // ✅ frissítjük a listát
+  });
   }
 
 }

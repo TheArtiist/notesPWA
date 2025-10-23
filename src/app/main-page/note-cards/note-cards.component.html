@@ -3,5 +3,8 @@
         <h2 class="nodeCardTitle">{{ title }}</h2>
         <p class="nodeCardContent">{{ content }}</p>
         <h3 class="nodeCardDate">{{ date }}</h3>
+        <button class="deleteButton" 
+                mat-flat-button
+                (click)="deleteNote()">🗑️ Delete</button>
     </div>
 }

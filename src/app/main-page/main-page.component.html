@@ -16,6 +16,8 @@
               [title]="n.title"
               [content]="n.content"
               [date]="n.date"
+              [id]="n.id"
+              (delete)="onDeleteNote($event)"
             ></app-note-cards>
             <!-- <h2 class="title">{}</h2>
             <p>May 21, 2020</p>

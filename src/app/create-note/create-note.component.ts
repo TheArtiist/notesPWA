@@ -35,12 +35,7 @@ export class CreateNoteComponent {
 
   const id = this.route.snapshot.paramMap.get('id');
   if (id) {
-    this.managementService.getNoteById(+id).then(note => {
-      if (note) {
-        this.noteForm.patchValue(note);
-        this.editingNoteId = note.id;
-      }
-    });
+    this.managementService.getNoteById(+id);
   }
 }
 
@@ -53,7 +48,7 @@ export class CreateNoteComponent {
   };
 
   if (this.editingNoteId) {
-    this.managementService.updateNote(note).then(() => this.router.navigate(['/main']));
+    this.managementService.updateNote(note);
   } else {
     this.managementService.createNote(note.title, note.content, note.date);
     this.router.navigate(['/main']);

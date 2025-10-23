@@ -18,43 +18,27 @@ export class ManagementService {
   private readonly objectStoreName = "Notes";
   constructor() 
   {
-    const request = indexedDB.open("notes-db",1);
-
-    request.onerror = (event: any) => {
-      console.log("DB error: ", event.target.error);
-    }; //on error listener 
-
-    request.onupgradeneeded = (event: any) => {
-      console.log(event);
-      const db: IDBDatabase = event.target.result;
-
-      const objectStore = db.createObjectStore(this.objectStoreName, {keyPath: 'id', autoIncrement: true}); //id-ra megoldást találni
-      objectStore.createIndex("titleIndex", "Title", { unique: true }); //Nice to have, de most useless nekem
-    }
-
-    request.onsuccess = (event: any) => {
-        this.db = event.target.result; //ToDo
-    }
+    this.initIndexedDB();
   }
 
-  public getNoteById(id: number): Promise<Note | undefined> {
-  return new Promise((resolve, reject) => {
+  public getNoteById(id: number):  void{
+  
     const transaction = this.db.transaction(this.objectStoreName, "readonly");
     const objectStore = transaction.objectStore(this.objectStoreName);
     const request = objectStore.get(id);
 
     request.onsuccess = () => {
-      resolve(request.result);
+      
     };
 
     request.onerror = () => {
-      reject(request.error);
+      
     };
-  });
+  
 }
 
-public updateNote(note: Note): Promise<boolean> {
-  return new Promise((resolve, reject) => {
+public updateNote(note: Note): void {
+ 
     const transaction = this.db.transaction(this.objectStoreName, "readwrite");
     const objectStore = transaction.objectStore(this.objectStoreName);
     const request = objectStore.put(note); // put = update or insert
@@ -64,13 +48,13 @@ public updateNote(note: Note): Promise<boolean> {
       if (index !== -1) {
         this.notes[index] = note;
       }
-      resolve(true);
+      
     };
 
     request.onerror = () => {
-      reject(false);
+      
     };
-  });
+  
 }
 
 
@@ -86,9 +70,10 @@ public updateNote(note: Note): Promise<boolean> {
 
     request.onsuccess= (event: any) => {
       const newNote: Note = { 
-        ...note
-      }
-      this.notes.push(note);
+        ...note,
+        id: event.target.result,
+      };
+      this.notes.push(newNote);
     }
 
 
@@ -105,27 +90,49 @@ public updateNote(note: Note): Promise<boolean> {
 
       if(cursor){
         this.notes.push(cursor.value);
+        cursor.continue();
       }
-      cursor.continue();
     }
   }
 
-  public deleteNote(id: number): Promise<boolean> {
+  public deleteNote(id: number): Promise<void>{
   return new Promise((resolve, reject) => {
-    const transaction = this.db.transaction(this.objectStoreName, "readwrite");
-    const objectStore = transaction.objectStore(this.objectStoreName);
+    const objectStore = this.db.transaction(this.objectStoreName, 'readwrite').objectStore(this.objectStoreName);
     const request = objectStore.delete(id);
 
     request.onsuccess = () => {
-      this.notes = this.notes.filter(n => n.id !== id);
-      resolve(true);
+      const index = this.notes.findIndex(b => b.id == id);
+      if(index != -1){
+        this.notes.splice(index,1);
+      }
+      console.log("Elért a resolve-ig");
+      resolve();
     };
 
-    request.onerror = () => {
-      reject(false);
+    request.onerror = (event: any) => {
+      console.log('Error deleting item:', event.target.error);
+      reject(event.target.error);
     };
   });
 }
 
+private initIndexedDB(): void{
+  const request = indexedDB.open(this.objectStoreName,1);
+  request.onerror = (event: any) => {
+    console.log("Database error, can't open the db: ", event.target.result);
+  }; //on error listener 
 
+    request.onupgradeneeded = (event: any) => {
+      console.log(event);
+      const db: IDBDatabase = event.target.result;
+
+      const objectStore = db.createObjectStore(this.objectStoreName, {keyPath: 'id', autoIncrement: true}); //id-ra megoldást találni
+      objectStore.createIndex("titleIndex", "Title", { unique: true }); //Nice to have, de most useless nekem
+    }
+
+    request.onsuccess = (event: any) => {
+        this.db = event.target.result;
+        this.loadNotes();
+    }
+}
 }
