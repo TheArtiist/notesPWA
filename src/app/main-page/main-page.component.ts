@@ -35,5 +35,4 @@ export class MainPageComponent {
     this.notes = this.managementService.notes; // ✅ frissítjük a listát
   });
   }
-
 }

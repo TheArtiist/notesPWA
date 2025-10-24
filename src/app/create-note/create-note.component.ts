@@ -41,17 +41,26 @@ export class CreateNoteComponent {
 
 
   onSubmit(): void {
-  const note: Note = {
-    ...this.noteForm.value,
-    date: new Date().toISOString(),
-    id: this.editingNoteId ?? undefined
-  };
+    const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+    };
+    var dateforFormatting = new Date();
+    var dateFormatted: string = dateforFormatting.toLocaleDateString(undefined,options);
 
-  if (this.editingNoteId) {
-    this.managementService.updateNote(note);
-  } else {
-    this.managementService.createNote(note.title, note.content, note.date);
-    this.router.navigate(['/main']);
+    const note: Note = {
+      ...this.noteForm.value,
+      date: dateFormatted,
+      
+    };
+    if (this.editingNoteId !== undefined) {
+      note.id= this.editingNoteId;
+      this.managementService.updateNote(note);
+      this.router.navigate(['mainPage']);
+    } else {
+      this.managementService.createNote(note.title, note.content, note.date);
+      this.router.navigate(['mainPage']);
+    }
   }
-}
 }

@@ -25,6 +25,7 @@ body {
 
 .sidebar {
   width: 250px;
+  height: 100%;
   background: $sidebar-bg;
   color: white;
   display: flex;
@@ -42,14 +43,14 @@ body {
     border: none;
     font-size: 1.5rem;
     padding: 0.5rem;
-    border-radius: 50%;
+    border-radius: 0%;
     cursor: pointer;
     margin-bottom: 1rem;
   }
 
   .search {
     padding: 0.5rem;
-    border-radius: 6px;
+    border-radius: 0px;
     border: none;
     font-size: 1rem;
   }
