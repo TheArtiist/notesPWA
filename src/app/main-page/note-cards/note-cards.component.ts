@@ -27,9 +27,12 @@ export class NoteCardsComponent {
       }*/
     })
   }
-  public deleteNote(){
+  public deleteNote(): void{
     console.log("emitter");
     if(this.note) this.delete.emit(this.note.id);
     
+  }
+  public editNote(): void{
+
   }
 }
