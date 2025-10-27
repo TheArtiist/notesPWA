@@ -25,7 +25,6 @@ export class CreateNoteComponent {
   private managementService = inject(ManagementService);
 
   noteForm!: FormGroup;
-  editingNoteId?: number;
 
  ngOnInit(): void {
   this.noteForm = this.fb.group({
@@ -54,13 +53,11 @@ export class CreateNoteComponent {
       date: dateFormatted,
       
     };
-    if (this.editingNoteId !== undefined) {
-      note.id= this.editingNoteId;
-      this.managementService.updateNote(note);
-      this.router.navigate(['mainPage']);
-    } else {
       this.managementService.createNote(note.title, note.content, note.date);
       this.router.navigate(['mainPage']);
-    }
+  }
+
+  public cancelButton(): void{
+    this.router.navigate(['mainPage']);
   }
 }

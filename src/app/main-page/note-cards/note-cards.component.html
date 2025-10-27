@@ -1,10 +1,18 @@
 @if(note){
     <div>
-        <h2 class="nodeCardTitle">{{ title }}</h2>
-        <p class="nodeCardContent">{{ content }}</p>
-        <h3 class="nodeCardDate">{{ date }}</h3>
-        <button class="deleteButton" 
+        <h2 class="noteCardTitle">{{ title }}</h2>
+        <p class="noteCardContent">{{ content }}</p>
+        <h3 class="noteCardDate">{{ date }}</h3>
+        
+        <div class="buttonHolder">
+            <button class="editButton" 
+                    mat-flat-button
+                    (click)="editNote()">📝 Edit
+            </button>
+            <button class="deleteButton" 
                 mat-flat-button
-                (click)="deleteNote()">🗑️ Delete</button>
+                (click)="deleteNote()">🗑️ Delete
+            </button>
+        </div>
     </div>
 }

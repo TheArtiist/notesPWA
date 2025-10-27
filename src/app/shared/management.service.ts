@@ -35,7 +35,7 @@ public updateNote(note: Note): void {
  
     const transaction = this.db.transaction(this.objectStoreName, "readwrite");
     const objectStore = transaction.objectStore(this.objectStoreName);
-    const request = objectStore.add(note); // put = update or insert
+    const request = objectStore.put(note); // put = update or insert
 
     request.onsuccess = () => {
       const index = this.notes.findIndex(n => n.id === note.id);
@@ -44,9 +44,8 @@ public updateNote(note: Note): void {
       }
       
     };
-
-    request.onerror = () => {
-      
+    request.onerror = () => {    
+      console.log("There was an error during the note update");
     };
   
 }
