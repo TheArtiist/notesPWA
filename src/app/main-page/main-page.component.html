@@ -10,7 +10,7 @@
       <h1>Notes</h1>
       <div class="notes-grid">
         @for(n of notes; track $index){
-          <div class="note-card color-1">
+          <div class="note-card color-1" appHoverHighlight="#90caf9">
             <app-note-cards 
               [note]="n" 
               [title]="n.title"

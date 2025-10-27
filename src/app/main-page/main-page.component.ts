@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { NoteCardsComponent } from './note-cards/note-cards.component';
 import { Note } from '../shared/note';
 import { ManagementService } from '../shared/management.service';
 import { Router } from '@angular/router';
-
+import { HoverHighlightDirective } from '../shared/hover-highlight.directive';
 
 @Component({
   selector: 'mainPage',
   standalone: true,
   imports: [
-    NoteCardsComponent
+    NoteCardsComponent,
+    HoverHighlightDirective
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
@@ -32,7 +33,7 @@ export class MainPageComponent {
   public onDeleteNote(id: number):void{
     console.log("main-page");
     this.managementService.deleteNote(id).then(() => {
-    this.notes = this.managementService.notes; // ✅ frissítjük a listát
+    this.notes = this.managementService.notes; 
   });
   }
 }
