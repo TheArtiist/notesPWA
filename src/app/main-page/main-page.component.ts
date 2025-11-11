@@ -4,19 +4,24 @@ import { Note } from '../shared/note';
 import { ManagementService } from '../shared/management.service';
 import { Router } from '@angular/router';
 import { HoverHighlightDirective } from '../shared/hover-highlight.directive';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'mainPage',
   standalone: true,
   imports: [
     NoteCardsComponent,
-    HoverHighlightDirective
+    HoverHighlightDirective,
+    FormsModule,
+    CommonModule
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss'
 })
 export class MainPageComponent {
   public notes: Note[];
+  public searchTerm: string = '';
 
   constructor(
     private managementService: ManagementService,
@@ -31,9 +36,13 @@ export class MainPageComponent {
   }
 
   public onDeleteNote(id: number):void{
-    console.log("main-page");
+    //for debugging - console.log("main-page");
     this.managementService.deleteNote(id).then(() => {
     this.notes = this.managementService.notes; 
   });
+  }
+
+  public onEditNote(id: number):void{
+    
   }
 }

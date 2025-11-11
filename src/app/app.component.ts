@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms'; 
 import { LoginComponent } from './login/login.component'; 
 import { SwUpdate } from '@angular/service-worker';
-import { interval } from 'rxjs';
+import { from, interval, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-root',
