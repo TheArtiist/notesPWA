@@ -1,6 +1,7 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms'; 
+import { ReactiveFormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'; 
 import { LoginComponent } from './login/login.component'; 
 import { SwUpdate } from '@angular/service-worker';
 import { from, interval, Observable, of } from 'rxjs';
@@ -17,9 +18,10 @@ export class AppComponent implements OnInit, OnDestroy{
   private swUpdate = inject(SwUpdate);
   private onlineCallback = () => console.log("online");
   private offlineCallback = () => console.log("offline");
+  private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    interval(3000).subscribe(() => {
+    interval(3000).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.swUpdate.checkForUpdate().then(
         update => {
           if(update){
@@ -39,5 +41,5 @@ export class AppComponent implements OnInit, OnDestroy{
       window.removeEventListener('online',this.offlineCallback);
   }
 
-  title = 'notesPWA';
+  title = 'notespwa';
 }
