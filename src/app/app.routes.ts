@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { MainPageComponent } from './main-page/main-page.component';
+import { authGGuard } from './auth-g.guard';
 
 export const routes: Routes = [
     {
@@ -17,12 +18,14 @@ export const routes: Routes = [
     {
         path: "mainPage",
         //component: MainPageComponent
-        loadComponent: () => import("./main-page/main-page.component").then(c => c.MainPageComponent)
+        loadComponent: () => import("./main-page/main-page.component").then(c => c.MainPageComponent),
+        canActivate: [authGGuard]
     },
     {
         path: "createNote",
         //component: CreateNoteComponent
-        loadComponent: () => import("./create-note/create-note.component").then(c => c.CreateNoteComponent)
+        loadComponent: () => import("./create-note/create-note.component").then(c => c.CreateNoteComponent),
+        canActivate: [authGGuard]
     },
     {
         path: "**",

@@ -3,27 +3,25 @@
     <aside class="sidebar">
       <div class="logo">🗂️ Notes</div>
       <button class="add-note" type="button" (click)="createNote()">＋</button>
-      <input type="text" class="search" placeholder="Search notes..." />
+      <input type="text" class="search" placeholder="Search notes..." [(ngModel)]="searchTerm" />
     </aside>
 
     <main class="main">
       <h1>Notes</h1>
       <div class="notes-grid">
-        @for(n of notes; track $index){
-          <div class="note-card color-1">
+  <ng-container *ngFor="let n of notes; let i = index">
+          <div class="note-card color-1" appHoverHighlight="#90caf9">
             <app-note-cards 
               [note]="n" 
               [title]="n.title"
               [content]="n.content"
               [date]="n.date"
               [id]="n.id"
+              [searchTerm]="searchTerm"
               (delete)="onDeleteNote($event)"
             ></app-note-cards>
-            <!-- <h2 class="title">{}</h2>
-            <p>May 21, 2020</p>
-            <span class="icon">⭐</span> -->
           </div>
-       }
+        </ng-container>
       </div>
     </main>
   </div>

@@ -1,7 +1,7 @@
-@if(note){
+<div *ngIf="note">
     <div>
-        <h2 class="noteCardTitle">{{ title }}</h2>
-        <p class="noteCardContent">{{ content }}</p>
+    <h2 class="noteCardTitle" [innerHTML]="title | highLight: searchTerm"></h2>
+    <p class="noteCardContent" [innerHTML]="content | highLight: searchTerm"></p>
         <h3 class="noteCardDate">{{ date }}</h3>
         
         <div class="buttonHolder">
@@ -15,4 +15,4 @@
             </button>
         </div>
     </div>
-}
+</div>

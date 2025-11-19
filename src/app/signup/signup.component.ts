@@ -1,7 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Firestore } from '@angular/fire/firestore';
+import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'signup',
@@ -13,8 +16,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 export class SignupComponent {
   signupForm: FormGroup;
+  private readonly emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  private fireStore = inject(Firestore);
+  private router = inject(Router);
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
@@ -44,7 +50,16 @@ export class SignupComponent {
     if (this.signupForm.valid) {
       const { email, password } = this.signupForm.value;
       console.log('Sign-up data:', email, password);
-      // TODO: Send to backend or Firebase
+      this.authService.signUp(email, password)
+        .subscribe({
+          next: (userCredential: any) => {
+            console.log('User signed up:', userCredential.user);
+            this.router.navigate(['mainPage']);
+          },
+          error: (error: any) => {
+            console.error('Sign-up error:', error);
+          }
+        });
     }
   }
 }

@@ -35,7 +35,7 @@ public updateNote(note: Note): void {
  
     const transaction = this.db.transaction(this.objectStoreName, "readwrite");
     const objectStore = transaction.objectStore(this.objectStoreName);
-    const request = objectStore.put(note); // put = update or insert
+    const request = objectStore.put(note); 
 
     request.onsuccess = () => {
       const index = this.notes.findIndex(n => n.id === note.id);
@@ -52,14 +52,14 @@ public updateNote(note: Note): void {
 
 
   public createNote(title: string, content: string, date: string): boolean{
-    let note: Note = { //Note típus legyen
+    let note: Note = { 
       title,
       content,
       date
     };
 
     const objectStore = this.db.transaction(this.objectStoreName, "readwrite").objectStore(this.objectStoreName);
-    let request = objectStore.add(note); //Edit-nél put-ot kell használni
+    let request = objectStore.add(note); 
 
     request.onsuccess= (event: any) => {
       const newNote: Note = { 
@@ -99,7 +99,7 @@ public updateNote(note: Note): void {
       if(index != -1){
         this.notes.splice(index,1);
       }
-      console.log("Elért a resolve-ig")
+      //for debugging - console.log("Elért a resolve-ig")
       resolve();
     };
 
@@ -114,14 +114,14 @@ private initIndexedDB(): void{
   const request = indexedDB.open(this.objectStoreName,1);
   request.onerror = (event: any) => {
     console.log("Database error, can't open the db: ", event.target.result);
-  }; //on error listener 
+  }; 
 
     request.onupgradeneeded = (event: any) => {
       console.log(event);
       const db: IDBDatabase = event.target.result;
 
-      const objectStore = db.createObjectStore(this.objectStoreName, {keyPath: 'id', autoIncrement: true}); //id-ra megoldást találni
-      objectStore.createIndex("titleIndex", "Title", { unique: true }); //Nice to have, de most useless nekem
+      const objectStore = db.createObjectStore(this.objectStoreName, {keyPath: 'id', autoIncrement: true}); 
+      objectStore.createIndex("titleIndex", "Title", { unique: true }); 
     }
 
     request.onsuccess = (event: any) => {
