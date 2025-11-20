@@ -1,5 +1,5 @@
 <div class="create-note-container">
-  <h2>Create Note</h2>
+  <h2>{{ isEditMode ? 'Edit Note' : 'Create Note' }}</h2>
 
   <form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
     <label>Title</label>
@@ -11,7 +11,7 @@
     <label>Content</label>
     <textarea formControlName="content" rows="6"></textarea>
 
-    <button type="submit">Create</button>
-    <button (click)="cancelButton()">Cancel</button>
+    <button type="submit">{{ isEditMode ? 'Save Changes' : 'Create' }}</button>
+    <button type="button" (click)="cancelButton()">Cancel</button>
   </form>
 </div>

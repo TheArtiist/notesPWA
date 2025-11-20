@@ -15,21 +15,21 @@ export class ManagementService {
     this.initIndexedDB();
   }
 
-  public getNoteById(id: number):  void{
-  
-    const transaction = this.db.transaction(this.objectStoreName, "readonly");
-    const objectStore = transaction.objectStore(this.objectStoreName);
-    const request = objectStore.get(id);
+  public getNoteById(id: number): Promise<Note | undefined> {
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction(this.objectStoreName, "readonly");
+      const objectStore = transaction.objectStore(this.objectStoreName);
+      const request = objectStore.get(id);
 
-    request.onsuccess = () => {
-      
-    };
+      request.onsuccess = () => {
+        resolve(request.result);
+      };
 
-    request.onerror = () => {
-      
-    };
-  
-}
+      request.onerror = () => {
+        reject(request.error);
+      };
+    });
+  }
 
 public updateNote(note: Note): void {
  
@@ -99,7 +99,6 @@ public updateNote(note: Note): void {
       if(index != -1){
         this.notes.splice(index,1);
       }
-      //for debugging - console.log("Elért a resolve-ig")
       resolve();
     };
 

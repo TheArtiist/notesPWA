@@ -28,6 +28,12 @@ export const routes: Routes = [
         canActivate: [authGGuard]
     },
     {
+        path: "createNote/:id",
+        //component: CreateNoteComponent
+        loadComponent: () => import("./create-note/create-note.component").then(c => c.CreateNoteComponent),
+        canActivate: [authGGuard]
+    },
+    {
         path: "**",
         redirectTo: "login"
     }
