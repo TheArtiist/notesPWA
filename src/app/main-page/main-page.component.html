@@ -1,15 +1,15 @@
 
-  <div class="app">
+<div class="app">
     <aside class="sidebar">
       <div class="logo">🗂️ Notes</div>
       <button class="add-note" type="button" (click)="createNote()">＋</button>
-      <input type="text" class="search" placeholder="Search notes..." [(ngModel)]="searchTerm" />
+      <input type="text" class="search" placeholder="Search notes..." [(ngModel)]="searchTerm" (input)="onSearchChange(searchTerm)" />
     </aside>
 
     <main class="main">
       <h1>Notes</h1>
       <div class="notes-grid">
-  <ng-container *ngFor="let n of notes; let i = index">
+        <ng-container *ngFor="let n of (filteredNotes$ | async); let i = index">
           <div class="note-card color-1" appHoverHighlight="#90caf9">
             <app-note-cards 
               [note]="n" 
