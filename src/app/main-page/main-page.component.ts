@@ -36,7 +36,6 @@ export class MainPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Frissítjük a search service-ben a jegyzeteket
     this.searchService.updateNotes(this.managementService.notes);
   }
 
@@ -51,10 +50,8 @@ export class MainPageComponent implements OnInit {
   }
 
   public onDeleteNote(id: number):void{
-    //for debugging - console.log("main-page");
     this.managementService.deleteNote(id).then(() => {
       this.notes = this.managementService.notes;
-      // Frissítjük a search service-ben a jegyzeteket
       this.searchService.updateNotes(this.notes);
     });
   }

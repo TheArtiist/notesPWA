@@ -16,7 +16,6 @@ export class SearchService {
   public filteredNotes$: Observable<Note[]>;
 
   constructor() {
-    // Kombináljuk a keresési termet és a jegyzeteket, majd szűrjük
     this.filteredNotes$ = this.searchTerm$.pipe(
       debounceTime(300),
       distinctUntilChanged(),
@@ -34,22 +33,18 @@ export class SearchService {
     );
   }
 
-  // Frissítjük a keresési termet
   updateSearchTerm(term: string): void {
     this.searchTermSubject.next(term);
   }
 
-  // Frissítjük a jegyzeteket
   updateNotes(notes: Note[]): void {
     this.notesSubject.next(notes);
   }
 
-  // Observable-t adunk vissza a keresési termhez
   getSearchTerm(): Observable<string> {
     return this.searchTerm$;
   }
 
-  // Observable-t adunk vissza a szűrt jegyzetekhez
   getFilteredNotes(): Observable<Note[]> {
     return this.filteredNotes$;
   }
