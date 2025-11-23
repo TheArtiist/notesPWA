@@ -55,8 +55,4 @@ export class MainPageComponent implements OnInit {
       this.searchService.updateNotes(this.notes);
     });
   }
-
-  public onEditNote(id: number):void{
-    
-  }
 }

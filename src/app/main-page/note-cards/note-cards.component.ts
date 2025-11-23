@@ -30,7 +30,6 @@ export class NoteCardsComponent {
   constructor(){}
   
   public deleteNote(): void{
-    //for debugging - console.log("emitter");
     if(this.note) this.delete.emit(this.note.id);
     
   }
