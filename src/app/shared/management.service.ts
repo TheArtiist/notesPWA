@@ -24,7 +24,6 @@ export class ManagementService {
     authState(this.auth).subscribe(user => {
       this.user = user;
       if (user) {
-        // Load notes for this user from IndexedDB
         if (this.db) {
           this.loadNotes(user.uid);
         }
@@ -33,7 +32,6 @@ export class ManagementService {
         onSnapshot(notesCollection, (snapshot) => {
           snapshot.docChanges().forEach(change => {
             const data = change.doc.data() as any;
-            // Robust ID resolution
             let id = data.id;
             if (id === undefined || id === null) {
               const parsed = parseInt(change.doc.id, 10);
@@ -50,8 +48,7 @@ export class ManagementService {
           });
         });
       } else {
-        // User logged out: clear notes
-        this.notes.length = 0; // Clear in-place
+        this.notes.length = 0;
         this.user = null;
       }
     });
@@ -165,23 +162,20 @@ export class ManagementService {
     const objectStore = transaction.objectStore(this.objectStoreName);
 
     let request;
-    // Defensive check: verify index exists before using it
     if (userId && objectStore.indexNames.contains("ownerId")) {
       const index = objectStore.index("ownerId");
       request = index.openCursor(IDBKeyRange.only(userId));
     } else {
-      // Fallback: iterate all notes and filter manually (or load all if no user)
       request = objectStore.openCursor();
     }
 
-    this.notes.length = 0; // Clear in-place
+    this.notes.length = 0;
 
     request.onsuccess = (event: any) => {
       const cursor = event.target.result;
 
       if (cursor) {
         const note = cursor.value;
-        // If we fell back to full scan, filter manually by ownerId
         if (userId && !objectStore.indexNames.contains("ownerId")) {
           if (note.ownerId !== userId) {
             cursor.continue();
@@ -231,7 +225,6 @@ export class ManagementService {
   }
 
   private initIndexedDB(): void {
-    // Open version 4 to force upgrade
     const request = indexedDB.open(this.objectStoreName, 4);
     request.onerror = (event: any) => {
       console.log("Database error, can't open the db: ", event.target.result);
