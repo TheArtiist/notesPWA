@@ -3,4 +3,5 @@ export interface Note {
     content: string,
     date: string,
     id?: number,
+    ownerId?: string
 }
